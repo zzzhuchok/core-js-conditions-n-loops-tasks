@@ -21,8 +21,8 @@
  *  0  => true
  *  -5 => false
  */
-function isPositive(/* number */) {
-  throw new Error('Not implemented');
+function isPositive(number) {
+  return number >= 0;
 }
 
 /**
@@ -38,8 +38,14 @@ function isPositive(/* number */) {
  *  -5, 0, 5      => 5
  *  -0.1, 0, 0.2  => 0.2
  */
-function getMaxNumber(/* a, b, c */) {
-  throw new Error('Not implemented');
+function getMaxNumber(a, b, c) {
+  let result = 0;
+
+  if (a > result) result = a;
+  if (b > result) result = b;
+  if (c > result) result = c;
+
+  return result;
 }
 
 /**
@@ -82,8 +88,14 @@ function canQueenCaptureKing(/* queen, king */) {
  *  2, 2, 5   => false
  *  3, 0, 3   => false
  */
-function isIsoscelesTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isIsoscelesTriangle(a, b, c) {
+  let result = false;
+  if (!a || !b || !c) return false;
+
+  if (a === b && a + b > c) result = true;
+  if (a === c && a + c > b) result = true;
+  if (b === c && b + c > a) result = true;
+  return result;
 }
 
 /**
@@ -100,8 +112,23 @@ function isIsoscelesTriangle(/* a, b, c */) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  let number = num;
+  const romanNums = [
+    { value: 10, romanValue: 'X' },
+    { value: 9, romanValue: 'IX' },
+    { value: 5, romanValue: 'V' },
+    { value: 4, romanValue: 'IV' },
+    { value: 1, romanValue: 'I' },
+  ];
+  let roman = '';
+  for (let i = 0; i < romanNums.length; i += 1) {
+    while (number >= romanNums[i].value) {
+      roman += romanNums[i].romanValue;
+      number -= romanNums[i].value;
+    }
+  }
+  return roman;
 }
 
 /**
@@ -119,8 +146,58 @@ function convertToRomanNumerals(/* num */) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  let result = '';
+
+  for (let i = 0; i < numberStr.length; i += 1) {
+    switch (numberStr[i]) {
+      case '+':
+        result += result ? ` plus` : `plus`;
+        break;
+      case '-':
+        result += result ? ` minus` : `minus`;
+        break;
+      case '.':
+      case ',':
+        result += result ? ` point` : `point`;
+        break;
+      case '0':
+        result += result ? ` zero` : `zero`;
+        break;
+      case '1':
+        result += result ? ` one` : `one`;
+        break;
+      case '2':
+        result += result ? ` two` : `two`;
+        break;
+      case '3':
+        result += result ? ` three` : `three`;
+        break;
+      case '4':
+        result += result ? ` four` : `four`;
+        break;
+      case '5':
+        result += result ? ` five` : `five`;
+        break;
+      case '6':
+        result += result ? ` six` : `six`;
+        break;
+      case '7':
+        result += result ? ` seven` : `seven`;
+        break;
+      case '8':
+        result += result ? ` eight` : `eight`;
+        break;
+      case '9':
+        result += result ? ` nine` : `nine`;
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  return result;
 }
 
 /**
