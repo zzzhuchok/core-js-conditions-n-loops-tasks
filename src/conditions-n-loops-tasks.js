@@ -212,8 +212,14 @@ function convertNumberToString(numberStr) {
  *  '0123210'   => true
  *  'qweqwe'    => false
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  let result = true;
+  for (let i = 0; i < str.length; i += 1) {
+    const rightChart = str.length - 1 - i;
+    if (i === rightChart) break;
+    if (str[i] !== str[rightChart]) result = false;
+  }
+  return result;
 }
 
 /**
@@ -230,8 +236,15 @@ function isPalindrome(/* str */) {
  *  'qwerty', 'Q'     => -1
  *  'qwerty', 'p'     => -1
  */
-function getIndexOf(/* str, letter */) {
-  throw new Error('Not implemented');
+function getIndexOf(str, letter) {
+  let result = -1;
+  for (let i = 0; i < str.length; i += 1) {
+    if (str[i] === letter) {
+      result = i;
+      break;
+    }
+  }
+  return result;
 }
 
 /**
@@ -249,8 +262,16 @@ function getIndexOf(/* str, letter */) {
  *  12345, 0    => false
  *  12345, 6    => false
  */
-function isContainNumber(/* num, digit */) {
-  throw new Error('Not implemented');
+function isContainNumber(num, digit) {
+  let result = false;
+  const numStr = `${num}`;
+  for (let i = 0; i < numStr.length; i += 1) {
+    if (numStr[i] === `${digit}`) {
+      result = true;
+      break;
+    }
+  }
+  return result;
 }
 
 /**
@@ -291,8 +312,56 @@ function getBalanceIndex(/* arr */) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  let spiralMatrix = [];
+  const MAX_CNT = size ** 2;
+  let cnt = 1;
+  let posIndex = 0;
+
+  for (let i = 0; i < size; i += 1) {
+    spiralMatrix = [...spiralMatrix, []];
+  }
+
+  let rowStart = 0;
+  let rowEnd = size - 1;
+  let columnStart = 0;
+  let columnEnd = size - 1;
+
+  while (cnt <= MAX_CNT) {
+    for (let i = columnStart; i <= columnEnd; i += 1) {
+      spiralMatrix[rowStart][posIndex] = cnt;
+      cnt += 1;
+      posIndex += 1;
+    }
+    rowStart += 1;
+    posIndex = rowStart;
+
+    for (let i = rowStart; i <= rowEnd; i += 1) {
+      spiralMatrix[posIndex][columnEnd] = cnt;
+      cnt += 1;
+      posIndex += 1;
+    }
+    columnEnd -= 1;
+    posIndex = columnEnd;
+
+    for (let i = columnEnd; i >= columnStart; i -= 1) {
+      spiralMatrix[rowEnd][posIndex] = cnt;
+      cnt += 1;
+      posIndex -= 1;
+    }
+    rowEnd -= 1;
+    posIndex = rowEnd;
+
+    for (let i = rowEnd; i >= rowStart; i -= 1) {
+      spiralMatrix[posIndex][columnStart] = cnt;
+      cnt += 1;
+      posIndex -= 1;
+    }
+    columnStart += 1;
+    posIndex = columnStart;
+  }
+
+  return spiralMatrix;
 }
 
 /**
