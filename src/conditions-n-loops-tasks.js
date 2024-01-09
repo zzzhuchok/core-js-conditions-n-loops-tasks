@@ -381,6 +381,29 @@ function getSpiralMatrix(size) {
  */
 function rotateMatrix(/* matrix */) {
   throw new Error('Not implemented');
+  // const rowSize = matrix.length;
+  // const colSize = matrix[0].length;
+  // const matrixSize = rowSize * colSize;
+  // let cnt = 1;
+  // let startRow = 0;
+  // let startColumn = colSize - 1;
+
+  // let newMatrix = [];
+
+  // for (let i = 0; i < rowSize; i += 1) {
+  //   newMatrix = [...newMatrix, []];
+  // }
+
+  // while (cnt <= matrixSize) {
+  //   for (let i = 0; i < colSize; i += 1) {
+  //     newMatrix[i][startColumn] = matrix[startRow][i];
+  //     cnt += 1;
+  //   }
+  //   startRow += 1;
+  //   startColumn -= 1;
+  // }
+
+  // return newMatrix;
 }
 
 /**
@@ -418,9 +441,34 @@ function sortByAsc(/* arr */) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
+function shuffleChar(str, iterations) {
+  let checkStr = str;
+  let leftStr = '';
+  let rightStr = '';
+  let finalStr = '';
+  let cnt = 0;
+
+  while (cnt < iterations) {
+    leftStr = '';
+    rightStr = '';
+
+    for (let i = 0; i < checkStr.length; i += 1) {
+      if (i % 2 !== 0) {
+        rightStr += checkStr[i];
+      } else {
+        leftStr += checkStr[i];
+      }
+    }
+
+    finalStr = leftStr + rightStr;
+    checkStr = finalStr;
+    cnt += 1;
+  }
+
+  return finalStr;
 }
+
+console.log('--- shuffle: ', shuffleChar('012345', 2));
 
 /**
  * Returns the nearest largest integer consisting of the digits of the given positive integer.
