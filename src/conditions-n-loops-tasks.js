@@ -287,8 +287,23 @@ function isContainNumber(num, digit) {
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  let totalSum = 0;
+  let leftSum = 0;
+
+  for (let i = 0; i < arr.length; i += 1) {
+    totalSum += arr[i];
+  }
+
+  for (let i = 0; i < arr.length; i += 1) {
+    const rightSum = totalSum - leftSum - arr[i];
+    if (leftSum === rightSum) {
+      return i;
+    }
+    leftSum += arr[i];
+  }
+
+  return -1;
 }
 
 /**
@@ -442,33 +457,31 @@ function sortByAsc(/* arr */) {
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
 function shuffleChar(str, iterations) {
-  let checkStr = str;
-  let leftStr = '';
-  let rightStr = '';
-  let finalStr = '';
-  let cnt = 0;
+  let resultStr = str;
+  const stringCollection = new Map();
 
-  while (cnt < iterations) {
-    leftStr = '';
-    rightStr = '';
+  for (let i = 0; i < iterations; i += 1) {
+    if (stringCollection.has(resultStr)) {
+      resultStr = stringCollection.get(resultStr);
+    } else {
+      let leftPart = '';
+      let rightPart = '';
 
-    for (let i = 0; i < checkStr.length; i += 1) {
-      if (i % 2 !== 0) {
-        rightStr += checkStr[i];
-      } else {
-        leftStr += checkStr[i];
+      for (let j = 0; j < resultStr.length; j += 1) {
+        if (j % 2) {
+          rightPart += resultStr[j];
+        } else {
+          leftPart += resultStr[j];
+        }
       }
+      const newResultStr = leftPart + rightPart;
+      stringCollection.set(resultStr, newResultStr);
+      resultStr = newResultStr;
     }
-
-    finalStr = leftStr + rightStr;
-    checkStr = finalStr;
-    cnt += 1;
   }
 
-  return finalStr;
+  return resultStr;
 }
-
-console.log('--- shuffle: ', shuffleChar('012345', 2));
 
 /**
  * Returns the nearest largest integer consisting of the digits of the given positive integer.
@@ -487,8 +500,42 @@ console.log('--- shuffle: ', shuffleChar('012345', 2));
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/* number */) {
-  throw new Error('Not implemented');
+function getNearestBigger(number) {
+  const numberStr = `${number}`;
+  const numberArr = [];
+  const numberArrSort = [];
+  let changeA = null;
+  let changeB = null;
+
+  for (let i = numberStr.length - 2; i >= 0; i -= 1) {
+    for (let j = numberStr.length - 1; j > i; j -= 1) {
+      if (numberStr[j] > numberStr[i]) {
+        changeA = i;
+        changeB = j;
+        break;
+      }
+    }
+    if (changeA && changeB) {
+      break;
+    }
+  }
+
+  if (!changeA && !changeB) {
+    return number;
+  }
+
+  for (let i = 0; i < numberStr.length; i += 1) {
+    if (i < changeA || i === changeB) {
+      numberArr.push(numberStr[i]);
+    } else {
+      numberArrSort.push(numberStr[i]);
+    }
+  }
+
+  const result =
+    numberArr.join('') + numberArrSort.sort((a, b) => a - b).join('');
+
+  return +result;
 }
 
 module.exports = {
